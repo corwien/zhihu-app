@@ -15,10 +15,13 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('email')->unique();
+            $table->string('phone');
             $table->string('password');
             $table->string('avatar');
+            $table->string('confirmation_token');
+            $table->smallInteger('is_active')->default(0);  // 是否激活了邮箱
             $table->integer('questions_count')->default(0);
             $table->integer('answers_count')->default(0);
             $table->integer('comments_count')->default(0);
@@ -27,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->integer('followers_count')->default(0);
             $table->integer('followings_count')->default(0);
             $table->integer('collects_count')->default(0);
+            $table->json('settings')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
