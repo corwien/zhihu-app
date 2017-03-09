@@ -177,6 +177,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // 添加这行-邮件发送【20170308】
+        Naux\Mail\SendCloudServiceProvider::class,
+
     ],
 
     /*

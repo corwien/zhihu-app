@@ -6,6 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Mail;
+use Naux\Mail\SendCloudTemplate;
 
 class RegisterController extends Controller
 {
@@ -62,10 +64,39 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+        $user =  User::create([
+            'name'     => $data['name'],
+            'email'    => $data['email'],
+            'avatar'   => '/images/avatars/default.png',
+            'phone'    => '',
+            'confirmation_token' => str_random(40),
             'password' => bcrypt($data['password']),
         ]);
+
+        $this->sendVerifyEmailTo($user);
+
+        return $user;
+    }
+
+
+    /**
+     * 邮箱验证
+     * @param $user
+     */
+    public function sendVerifyEmailTo($user)
+    {
+        // 模板变量
+        $bind_data = [
+            'url' => route('email.verify', ['token' => $user->confirmation_token]),
+            'name' => $user->name,
+        ];
+        $template = new SendCloudTemplate('zhihu_app_register', $bind_data);
+
+        Mail::raw($template, function ($message) use ($user) {
+            $message->from('407544577@qq.com', 'Zhihu');
+
+            $message->to($user->email);
+        });
+
     }
 }
