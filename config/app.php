@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'ZhiLe',
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +77,8 @@ return [
     |
     */
 
-    'locale' => 'en',
+    // 'locale' => 'en',
+    'locale' => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -179,6 +180,9 @@ return [
 
         // 添加这行-邮件发送【20170308】
         Naux\Mail\SendCloudServiceProvider::class,
+
+        // 消息提示【20170309】
+        Laracasts\Flash\FlashServiceProvider::class,
 
     ],
 

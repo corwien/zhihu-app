@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Mail;
+use Naux\Mail\SendCloudTemplate;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -26,4 +29,26 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * 重写重置密码的邮件发送通知，覆盖zhihu_app_reset_password底层的发送方法
+     * @param $token
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        // 模板变量
+        $bind_data = [
+            'url' => url('password/reset', $token),
+        ];
+        $template = new SendCloudTemplate('zhihu_app_reset_password', $bind_data);
+
+        Mail::raw($template, function ($message){
+
+            $message->from('corwien@qq.com', 'Zhihu');
+
+            $message->to($this->email);
+        });
+
+
+    }
 }

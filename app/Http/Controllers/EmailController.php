@@ -16,7 +16,8 @@ class EmailController extends Controller
         // dd($user);
         if(empty($user))
         {
-           return redirect("/");
+            flash("邮箱验证失败！", "danger");
+            return redirect("/");
         }
 
         // 更新active
@@ -26,6 +27,7 @@ class EmailController extends Controller
 
         // 验证成功后，然后直接登录状态
         Auth::login($user);
+        flash("邮箱验证成功！", "success");
         return redirect("/home");
 
     }
