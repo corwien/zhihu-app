@@ -20,3 +20,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 Route::get('email/verify/{token}', ['as' => 'email.verify', 'uses' => 'EmailController@verify'] );
+
+// 问答路由
+Route::resource('questions', 'QuestionsController', ['names' =>
+  ['create' => 'question.create'],
+  ['show' => 'question.show'],
+]);

@@ -184,6 +184,9 @@ return [
         // 消息提示【20170309】
         Laracasts\Flash\FlashServiceProvider::class,
 
+        // 编辑器
+        Overtrue\LaravelUEditor\UEditorServiceProvider::class,
+
     ],
 
     /*
