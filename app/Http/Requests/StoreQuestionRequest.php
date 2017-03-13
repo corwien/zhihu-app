@@ -25,7 +25,7 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
             'body.required' => "内容 不能为空。",
-            'body.min'      => "内容 不能少于40个字符。",
+            'body.min'      => "内容 不能少于10个字符。",
         ];
     }
 
@@ -38,7 +38,7 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
             'title' => 'required|min:1|max:150',
-            'body'  => 'required|min:40'
+            'body'  => 'required|min:10'
         ];
     }
 }

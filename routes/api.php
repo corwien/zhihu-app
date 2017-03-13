@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// select2 ajax 请求话题选项[20170313]
+Route::get('/topics', function(Request $request){
+  $topics = \App\Models\Topic::select(['id', 'name'])
+      ->where('name', 'like', '%'.$request->query('q').'%')
+       ->get();
+    return $topics;
+})->middleware('api');

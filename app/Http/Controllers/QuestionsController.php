@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 use Auth;
 
+/**
+ * Class QuestionsController
+ *
+ * @package App\Http\Controllers
+ */
 class QuestionsController extends Controller
 {
     public function __construct()
@@ -47,6 +52,8 @@ class QuestionsController extends Controller
         // $answer = $request->all();
         // dd($answer);
         // $this->validate($request, $rules, $messages);
+
+        dd($request->get('topics'));
 
         $data = [
             'title' => $request->get('title'),
