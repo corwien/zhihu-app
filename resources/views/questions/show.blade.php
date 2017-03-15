@@ -5,7 +5,11 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ $question->title }}</div>
+                    <div class="panel-heading">{{ $question->title }}
+                        @foreach($question->topics as $topic)
+                            <a class="topic" href="/topic/{{ $topic->id }}">{{ $topic->name }}</a>
+                        @endforeach
+                    </div>
 
                     <div class="panel-body">
                         {!! $question->body !!}
@@ -14,11 +18,4 @@
             </div>
         </div>
     </div>
-    <style>
-         .panel-body img {
-            　　display: inline-block;
-            　　height: auto;
-            　　max-width: 100%;
-        }
-    </style>
 @endsection

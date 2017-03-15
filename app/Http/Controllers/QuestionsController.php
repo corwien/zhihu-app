@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionRequest;
-use App\Models\Question;
+use App\Repositories\QuestionRepository;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -15,10 +15,15 @@ use Auth;
  */
 class QuestionsController extends Controller
 {
-    public function __construct()
+    protected $questionRepository;
+
+    public function __construct(QuestionRepository $questionRepository)
     {
         // 未登录的用户，某些动作不能操作
         $this->middleware('auth')->except(['index', 'show']);
+
+        // 注入
+        $this->questionRepository = $questionRepository;
     }
 
     /**
@@ -53,14 +58,17 @@ class QuestionsController extends Controller
         // dd($answer);
         // $this->validate($request, $rules, $messages);
 
-        dd($request->get('topics'));
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
 
         $data = [
             'title' => $request->get('title'),
             'body' => $request->get('body'),
             'user_id' => Auth::id(),
         ];
-        $question = Question::create($data);
+        $question = $this->questionRepository->create($data);
+
+        // 问题关联话题
+        $question->topics()->attach($topics);
 
         flash("恭喜你，发布成功！", "success");
         return redirect()->route('questions.show', [$question->id]);
@@ -74,7 +82,14 @@ class QuestionsController extends Controller
      */
     public function show($id)
     {
-        $question = Question::findOrFail($id);
+        // 关联查询
+        // $question = Question::findOrFail($id);
+        // dd($question->topics);
+
+        // 这里将下面的方法进行分离，应用注入代替下面的方法
+        // $question = Question::where('id', $id)->with('topics')->first();
+        $question = $this->questionRepository->byIdWithTopics($id);
+
         return view('questions.show', compact('question'));
     }
 
@@ -111,4 +126,6 @@ class QuestionsController extends Controller
     {
         //
     }
+
+
 }

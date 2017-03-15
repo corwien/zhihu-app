@@ -7,13 +7,13 @@ use Symfony\Component\Console\Question\Question;
 
 class Topic extends Model
 {
-    protected $fillable = ['name', 'bio', 'questions_couont'];
+    protected $fillable = ['name', 'bio', 'questions_count'];
 
     /**
      * Eloquent 多对多关联
      */
     public function qustions()
     {
-        $this->belongsToMany(Question::class)->withTimestamps();
+        return $this->belongsToMany(Question::class)->withTimestamps();
     }
 }

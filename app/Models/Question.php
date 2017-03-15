@@ -14,7 +14,7 @@ class Question extends Model
      */
     public function topics()
     {
-        $this->belongsToMany(Topic::class)->withTimestamps();
+        return $this->belongsToMany(Topic::class)->withTimestamps();
     }
 
 }
