@@ -24,3 +24,9 @@ Route::get('/topics', function(Request $request){
        ->get();
     return $topics;
 })->middleware('api');
+
+// 关注按钮
+Route::post('question/follower', function(Request $request){
+    // return response()->json(['followed' => false]);
+   return response()->json(['question' => request('question')]);
+})->middleware('api');
