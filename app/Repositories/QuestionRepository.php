@@ -18,9 +18,9 @@ class QuestionRepository
      *
      * @return mixed
      */
-    public function byIdWithTopics($id)
+    public function byIdWithTopicsAndAnswers($id)
     {
-        return $question = Question::where('id', $id)->with('topics')->first();
+        return $question = Question::where('id', $id)->with(['topics','answers'])->first();
     }
 
     /**
@@ -31,6 +31,11 @@ class QuestionRepository
     public function create(array $attributes)
     {
         return Question::create($attributes);
+    }
+
+    public function byId($id)
+    {
+        return Question::findOrFail($id);
     }
 
 
@@ -49,6 +54,14 @@ class QuestionRepository
         })->toArray();
 
     }
+
+    public function getQuestionsFeed()
+    {
+        // return Question::latest('updated_at')->with('user')->get();
+        return Question::published()->latest('updated_at')->with('user')->get();
+    }
+
+
 
 
 }

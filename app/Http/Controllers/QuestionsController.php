@@ -33,7 +33,8 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        //
+        $questions = $this->questionRepository->getQuestionsFeed();
+        return view('questions.index', compact('questions'));
     }
 
     /**
@@ -88,7 +89,9 @@ class QuestionsController extends Controller
 
         // 这里将下面的方法进行分离，应用注入代替下面的方法
         // $question = Question::where('id', $id)->with('topics')->first();
-        $question = $this->questionRepository->byIdWithTopics($id);
+        $question = $this->questionRepository->byIdWithTopicsAndAnswers($id);
+
+        if(empty($question)) abort(404, "NOT FOUND");
 
         return view('questions.show', compact('question'));
     }
@@ -101,7 +104,15 @@ class QuestionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question = $this->questionRepository->byId($id);
+
+        // 判断是否为本人，否则不能编辑
+        if(Auth::user()->owns($question))
+        {
+            return view("questions.edit",  compact('question'));
+        }
+
+        return back();
     }
 
     /**
@@ -111,9 +122,23 @@ class QuestionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreQuestionRequest $request, $id)
     {
-        //
+        $question = $this->questionRepository->byId($id);
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
+
+        // 更新
+        $question->update([
+                'title' => $request->title,
+                'body'  => $request->body,
+            ]);
+
+        // 更新第三张关系表
+        $question->topics()->sync($topics);
+
+        flash("恭喜你，更新成功！", "success");
+        return redirect()->route('questions.show', [$question->id]);
+
     }
 
     /**
@@ -124,7 +149,21 @@ class QuestionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $question = $this->questionRepository->byId($id);
+
+        // 判断是否为本人，否则不能删除
+        if(Auth::user()->owns($question))
+        {
+            $question->delete();
+
+            // 删除第三张关系表
+            // $question->topics()->where('question_id', $question->id)->delete();
+            $question->topics()->detach();   // 移除关系表中的关联如果不删除，则会出现新添加的问题标签关联到旧的标签中。
+            return redirect('/');
+        }
+
+        return back();
+
     }
 
 
