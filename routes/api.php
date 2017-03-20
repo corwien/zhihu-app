@@ -27,6 +27,33 @@ Route::get('/topics', function(Request $request){
 
 // 关注按钮
 Route::post('question/follower', function(Request $request){
-    // return response()->json(['followed' => false]);
-   return response()->json(['question' => request('question')]);
+    $followed = \App\Models\Follow::where('question_id', $request->get('question'))
+                 ->where('user_id', $request->get('user'))
+                 ->count();
+    if($followed)
+    {
+        return response()->json(['followed' => true]);
+    }
+   return response()->json(['followed' => false]);
+})->middleware('api');
+
+// 关注动作
+Route::post('question/follow', function(Request $request){
+    $followed = \App\Models\Follow::where('question_id', $request->get('question'))
+        ->where('user_id', $request->get('user'))
+        ->first();
+
+    // 取消关注
+    if($followed !== null)
+    {
+        $followed->delete();
+        return response()->json(['followed' => false]);
+    }
+
+    // 添加关注
+    \App\Models\Follow::create([
+        'question_id' => $request->get('question'),
+        'user_id'     => $request->get('user')
+    ]);
+    return response()->json(['followed' => true]);
 })->middleware('api');
