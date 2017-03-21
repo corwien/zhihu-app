@@ -29,9 +29,17 @@ window.Vue = require('vue');
 
 window.axios = require('axios');
 
+
+/*
+  // API token 认证-【20170321】
 window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest'
+};
+*/
+window.axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': window.Laravel.csrfToken,
+    'Authorization': window.Laravel.apiToken
 };
 
 /**

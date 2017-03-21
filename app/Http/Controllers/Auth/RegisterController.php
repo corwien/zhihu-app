@@ -71,6 +71,7 @@ class RegisterController extends Controller
             'phone'    => '',
             'confirmation_token' => str_random(40),
             'password' => bcrypt($data['password']),
+            'api_token' => str_random(60),   // api_token认证
         ]);
 
         $this->sendVerifyEmailTo($user);
