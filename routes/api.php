@@ -35,7 +35,7 @@ Route::post('question/follower', function(Request $request){
         return response()->json(['followed' => true]);
     }
    return response()->json(['followed' => false]);
-})->middleware('api');
+})->middleware('auth:api');
 
 // 关注动作
 Route::post('question/follow', function(Request $request){

@@ -25,8 +25,7 @@ export default {
        axios.post('/api/question/follower', {
            'question':this.question,
            'user':this.user
-       }).then(function(response){
-           // console.log(response.data);
+       }).then((response) => {
            this.followed = response.data.followed;
        })
     },
@@ -47,7 +46,7 @@ export default {
             axios.post('/api/question/follow', {
                 'question':this.question,
                 'user':this.user
-            }).then(function(response){
+            }).then((response) => {
                 this.followed = response.data.followed;
             })
         }
