@@ -12,7 +12,7 @@
              --}}
             <question-follow-button  question="{{ $question->id }}" user="{{ Auth::id() }}"></question-follow-button>
             {{--<example></example>--}}
-            <a href="#editor" class="btn btn-primary">撰写答案</a>
+            <a href="#editor" class="btn btn-primary  pull-right">撰写答案</a>
         </div>
     </div>
 

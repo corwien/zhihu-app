@@ -29,9 +29,10 @@
                     </div>
                 </div>
             </div>
-            @include("layouts._right_side")
+            @include("layouts._right_question_follow_side")
+            @include("layouts._right_question_author_side")
         </div>
+        @include("answers._create")
 
     </div>
-    @include("answers._create")
 @endsection

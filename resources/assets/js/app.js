@@ -13,9 +13,10 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-
+// 注册Vue组件
  Vue.component('example', require('./components/Example.vue'));
  Vue.component('question-follow-button', require('./components/QuestionFollowButton.vue'));
+ Vue.component('user-follow-button', require('./components/UserFollowButton.vue'));
 
 const app = new Vue({
     el: '#app'

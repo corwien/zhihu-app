@@ -1,8 +1,7 @@
 
 @include('vendor.ueditor.assets')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-9 col-md-offset-1">
+    <div class="row">
+            <div class="col-md-8 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">答案数：{{ $question->answers_count }}
                     </div>
@@ -25,9 +24,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
+    </div> 
     <!-- 实例化编辑器 -->
     @section('js')
         <script type="text/javascript">

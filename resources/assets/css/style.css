@@ -45,4 +45,19 @@ button.is-naked{
     text-align: center;
 }
 
+/**
+ *  右侧栏用户信息样式
+ */
+.user-statics, .user-actions{
+    margin-top:20px;
+}
+
+.user-statics{
+    display:flex;
+}
+
+.statics-item{
+    padding:2px 20px;
+}
+
 

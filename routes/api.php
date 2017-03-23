@@ -25,6 +25,7 @@ Route::get('/topics', function(Request $request){
     return $topics;
 })->middleware('api');
 
+/*  未经过 auth.api 认证，下边对这两个关注接口进行重构
 // 关注按钮
 Route::post('question/follower', function(Request $request){
     $followed = \App\Models\Follow::where('question_id', $request->get('question'))
@@ -35,7 +36,7 @@ Route::post('question/follower', function(Request $request){
         return response()->json(['followed' => true]);
     }
    return response()->json(['followed' => false]);
-})->middleware('auth:api');
+})->middleware('api');
 
 // 关注动作
 Route::post('question/follow', function(Request $request){
@@ -57,3 +58,49 @@ Route::post('question/follow', function(Request $request){
     ]);
     return response()->json(['followed' => true]);
 })->middleware('api');
+*/
+
+// 关注按钮,是否已经关注
+Route::post('/question/follower', function(Request $request){
+
+    $user = Auth::guard('api')->user();
+    if($user->followed($request->get('question')))
+    {
+        return response()->json(['followed' => true]);
+    }
+    return response()->json(['followed' => false]);
+})->middleware('auth:api');
+
+
+// 关注动作
+Route::post('/question/follow', function(Request $request){
+
+    $user = Auth::guard('api')->user();
+    $question = \App\Models\Question::find($request->get('question'));
+    $followed = $user->followThis($question->id);
+    /*
+    dd($followed);
+    array:2 [
+       "attached" => []
+        "detached" => array:1 [
+         0 => 10
+        ]
+      ]
+    */
+
+    if(count($followed['detached']) > 0)
+    {
+        $question->decrement('followers_count');
+        return response()->json(['followed' => false]);
+    }
+    $question->increment('followers_count');
+
+    return response()->json(['followed' => true]);
+})->middleware('auth:api');
+
+// 用户关注粉丝
+Route::get('/user/followers/{id}', 'FollowersController@index');
+
+Route::post('/user/follow', 'FollowersController@follow');
+
+

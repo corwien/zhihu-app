@@ -35,7 +35,10 @@ class User extends Authenticatable
     ];
 
 
-
+    /**
+     * 用户和答案关系
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function answers()
     {
         return $this->hasMany(Answer::class);
@@ -86,7 +89,6 @@ class User extends Authenticatable
     public function followThis($question)
     {
         return $this->follow()->toggle($question);
-
     }
 
     /**
@@ -98,7 +100,35 @@ class User extends Authenticatable
     public function followed($question)
     {
         return $this->follow()->where('question_id', $question)->count();
+    }
 
+    /**
+     * 用户的关注和被关注者的关联关系
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followers()
+    {
+        return $this->belongsToMany(self::class, "followers", 'follower_id', 'followed_id')->withTimestamps();
+    }
+
+    /**
+     * 关注用户
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followersUser()
+    {
+        return $this->belongsToMany(self::class, "followers", 'followed_id', 'follower_id')->withTimestamps();
+    }
+
+    /**
+     * 关注用户动作
+     * @param $user
+     *
+     * @return array
+     */
+    public function followThisUser($user)
+    {
+        return $this->followers()->toggle($user);
     }
 
     /**
