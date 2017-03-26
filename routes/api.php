@@ -100,7 +100,10 @@ Route::post('/question/follow', function(Request $request){
 
 // 用户关注粉丝
 Route::get('/user/followers/{id}', 'FollowersController@index');
-
 Route::post('/user/follow', 'FollowersController@follow');
+
+// 点赞
+Route::post('/answer/{id}/votes/users', 'VotesController@users');
+Route::post('/answer/vote', 'VotesController@vote');
 
 

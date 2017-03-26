@@ -35,17 +35,8 @@ class AnswerRepository
 
     public function byId($id)
     {
-        return Question::findOrFail($id);
+        return Answer::findOrFail($id);
     }
-
-
-    public function getQuestionsFeed()
-    {
-        // return Question::latest('updated_at')->with('user')->get();
-        return Question::published()->latest('updated_at')->with('user')->get();
-    }
-
-
 
 
 }

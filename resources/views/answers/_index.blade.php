@@ -3,9 +3,7 @@
             @foreach($question->answers as $answers)
                 <div class="media">
                     <div class="media-left">
-                        <a href="">
-                            <img width="36px" src="{{ $answers->user->avatar }}" alt="{{ $answers->user->name }}">
-                        </a>
+                        <user-vote-button answer="{{ $answers->id }}" count="{{ $answers->votes_count }}"></user-vote-button>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">
@@ -14,6 +12,7 @@
 
                         {!! $answers->body !!}
                     </div>
+
                 </div>
             @endforeach
 
