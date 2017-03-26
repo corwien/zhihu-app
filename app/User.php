@@ -7,9 +7,9 @@ use App\Models\Question;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use App\Mailer\UserMailer;
 
 use Mail;
-use Naux\Mail\SendCloudTemplate;
 
 
 class User extends Authenticatable
@@ -137,6 +137,7 @@ class User extends Authenticatable
      */
     public function sendPasswordResetNotification($token)
     {
+        /*
         // 模板变量
         $bind_data = [
             'url' => url('password/reset', $token),
@@ -149,6 +150,9 @@ class User extends Authenticatable
 
             $message->to($this->email);
         });
+        */
+        // 重构发送邮件
+        (new UserMailer())->resetPassword($token, $this->email);
 
     }
 

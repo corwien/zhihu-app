@@ -35,3 +35,7 @@ Route::Post('questions/{question}/answer', 'AnswersController@store');
 
 // 关注问题,注意，这里的question为变量，在控制器中以该名字获取 question = 10;
 Route::get('questions/{question}/follow', 'QuestionFollowController@follow');
+
+
+// 通知
+Route::get('notifications', 'NotificationsController@index');
