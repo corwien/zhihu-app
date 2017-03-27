@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Answer;
 use App\Models\Follow;
+use App\Models\Message;
 use App\Models\Question;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -163,6 +164,15 @@ class User extends Authenticatable
     public function followThisUser($user)
     {
         return $this->followers()->toggle($user);
+    }
+
+    /**
+     * 用户和私信关系
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'to_user_id');
     }
 
 

@@ -106,4 +106,7 @@ Route::post('/user/follow', 'FollowersController@follow');
 Route::post('/answer/{id}/votes/users', 'VotesController@users');
 Route::post('/answer/vote', 'VotesController@vote');
 
+// 发送私信
+Route::post('/message/store', 'MessagesController@store');
+
 
