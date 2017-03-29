@@ -26,7 +26,17 @@
                             </form>
                         @endif
 
+                        <!-- question评论Vue -->
+                        <comments
+                                type="question"
+                                model="{{ $question->id }}"
+                                count="{{ $question->comments()->count() }}">
+
+                        </comments>
+
                     </div>
+
+
                 </div>
             </div>
             @include("layouts._right_question_follow_side")

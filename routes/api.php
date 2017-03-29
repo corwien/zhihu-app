@@ -109,4 +109,10 @@ Route::post('/answer/vote', 'VotesController@vote');
 // 发送私信
 Route::post('/message/store', 'MessagesController@store');
 
+// 评论
+Route::get('answer/{id}/comments', 'CommentsController@answer');
+Route::get('question/{id}/comments', 'CommentsController@question');
+Route::post('comment', 'CommentsController@store');
+
+
 

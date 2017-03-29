@@ -20,6 +20,14 @@
         ]) !!};
 
         Laravel.apiToken = "{{ Auth::check() ? 'Bearer '.Auth::user()->api_token : 'Bearer ' }}";
+
+        // 定义全局变量Zhihu
+        @if(Auth::check())
+            window.Zhihu = {
+            name:"{{ Auth::user()->name }}",
+            avatar:"{{ Auth::user()->avatar }}"
+        }
+        @endif
     </script>
 </head>
 <body>

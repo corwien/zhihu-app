@@ -22,6 +22,9 @@ require('./bootstrap');
 // 发送私信Modal
  Vue.component('send-message', require('./components/SendMessage.vue'));
 
+// 评论
+ Vue.component('comments', require('./components/Comments.vue'));
+
 const app = new Vue({
     el: '#app'
 });

@@ -38,5 +38,19 @@ class AnswerRepository
         return Answer::findOrFail($id);
     }
 
+    /**
+     * 获取回答的评论
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function getAnswerCommentsById($id)
+    {
+        $answer = Answer::with('comments', 'comments.user')
+            ->where('id', $id)->first();
+
+        return $answer->comments;
+    }
+
 
 }

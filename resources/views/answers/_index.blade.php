@@ -13,6 +13,13 @@
                         {!! $answers->body !!}
                     </div>
 
+                    <!-- answer评论Vue -->
+                    <comments
+                            type="answer"
+                            model="{{ $answers->id }}"
+                            count="{{ $answers->comments()->count() }}">
+                    </comments>
+
                 </div>
             @endforeach
 

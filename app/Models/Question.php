@@ -48,6 +48,14 @@ class Question extends Model
     }
 
     /**
+     * 获取所有问题的评论
+     */
+    public function comments()
+    {
+        return $this->morphMany('App\Models\Comment', 'commentable');
+    }
+
+    /**
      * 判断该问题是否被隐藏
      * @param $query
      *
