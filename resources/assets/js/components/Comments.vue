@@ -28,7 +28,7 @@ v-on:click="showCommentsForm"
                             </a>
                         </div>
                        <div class="media-body">
-                        <h4 class="media-heading">{{ comment.user.name }}</h4>
+                        <h4 class="media-heading">{{ comment.user.name }}&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{{ comment.created_at }}</h4>
                            {{ comment.body }}
                        </div>
                     </div>
