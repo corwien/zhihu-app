@@ -60,4 +60,25 @@ button.is-naked{
     padding:2px 20px;
 }
 
+/**
+对话列表样式
+**/
+.messages-list {
+    margin-top: 80px;
+}
+
+/**
+* 私信未读
+*/
+.media.unread {
+    background-color: pink;
+}
+
+/**
+* 通知未读
+*/
+.notifications.unread {
+    background-color: pink;
+}
+
 

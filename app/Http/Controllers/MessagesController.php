@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * 私信
+ */
 namespace App\Http\Controllers;
 
 use App\Repositories\MessageRepository;
@@ -27,6 +30,7 @@ class MessagesController extends Controller
             'to_user_id'   => request('user'),
             'from_user_id' => Auth::guard('api')->user()->id,
             'body'         => request('body'),
+            'dialog_id'    => time().Auth::id(),
         ]);
 
         if($message_res)

@@ -36,6 +36,14 @@ Route::Post('questions/{question}/answer', 'AnswersController@store');
 // 关注问题,注意，这里的question为变量，在控制器中以该名字获取 question = 10;
 Route::get('questions/{question}/follow', 'QuestionFollowController@follow');
 
-
 // 通知
 Route::get('notifications', 'NotificationsController@index');
+Route::get('notifications/{notification}', 'NotificationsController@show');
+
+// 私信
+Route::get('inbox', 'InboxController@index');
+Route::get('inbox/{dialogId}', 'InboxController@show');
+Route::post('inbox/{dialogId}/store', 'InboxController@store');
+
+
+

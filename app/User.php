@@ -169,6 +169,8 @@ class User extends Authenticatable
     /**
      * 用户和私信关系
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * select u.*, m.* from user as u left join message m on u.id = m.to_user_id where id=to_user_id
+     * where u.id = 12345;
      */
     public function messages()
     {

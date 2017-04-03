@@ -28,8 +28,8 @@ v-on:click="showCommentsForm"
                             </a>
                         </div>
                        <div class="media-body">
-                        <h4 class="media-heading">{{ comment.user.name }}&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{{ comment.created_at }}</h4>
-                           {{ comment.body }}
+                        <h4 class="media-heading">{{ comment.user.name }}</h4>
+                           {{ comment.body }}<span class="pull-right">{{ comment.created_at }}</span>
                        </div>
                     </div>
 
@@ -59,13 +59,6 @@ export default {
         return {
             body : '',
             comments :[],
-            newComment:{
-                user:{
-                    name:Zhihu.name,
-                    avatar:Zhihu.avatar
-                },
-                body:''
-            }
         }
     },
 
@@ -89,9 +82,15 @@ export default {
             axios.post('/api/comment', {
                 'type':this.type, 'model':this.model, 'body':this.body
             }).then((response) => {
+                let comment = {
+                    user:{
+                        name:Zhihu.name,
+                        avatar:Zhihu.avatar
+                    },
+                    body:response.data.body
+                }
 
-                this.newComment.body = response.data.body
-                this.comments.push(this.newComment)
+                this.comments.push(comment)
                 this.body = ''
                 this.count ++
 
