@@ -45,5 +45,8 @@ Route::get('inbox', 'InboxController@index');
 Route::get('inbox/{dialogId}', 'InboxController@show');
 Route::post('inbox/{dialogId}/store', 'InboxController@store');
 
+// 上传头像
+Route::get('avatar', 'UsersController@avatar');
+Route::post('avatar', 'UsersController@avatarUpload');
 
 

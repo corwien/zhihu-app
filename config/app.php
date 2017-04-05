@@ -190,6 +190,8 @@ return [
         // debarbar[20170318]
         Barryvdh\Debugbar\ServiceProvider::class,
 
+        // qiniu [20170405]
+        Overtrue\LaravelFilesystem\Qiniu\QiniuStorageServiceProvider::class,
     ],
 
     /*
