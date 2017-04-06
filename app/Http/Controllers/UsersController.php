@@ -35,10 +35,7 @@ class UsersController extends Controller
 
         // 将图片保存到七牛[20170405]
         $filename = 'avatars/' . md5(time().user()->id) . '.' . $file->getClientOriginalExtension();
-
         Storage::disk('qiniu')->writeStream($filename, fopen($file->getRealPath(), 'r'));
-        $ret = config('filesystems.disks.qiniu.domain');
-        return $ret;
 
         user()->avatar = 'http://'.config('filesystems.disks.qiniu.domain') . '/' . $filename;
 
