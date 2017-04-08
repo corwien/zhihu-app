@@ -71,6 +71,7 @@ class RegisterController extends Controller
             'confirmation_token' => str_random(40),
             'password' => bcrypt($data['password']),
             'api_token' => str_random(60),   // api_token认证
+            'settings' => ['city' => ''],
         ]);
 
         $this->sendVerifyEmailTo($user);
@@ -85,6 +86,7 @@ class RegisterController extends Controller
      */
     public function sendVerifyEmailTo($user)
     {
-       （new UserMailer())->confirmEmail($user);
+        $userObject = new UserMailer();
+        $userObject->confirmEmail($user);
     }
 }

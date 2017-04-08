@@ -6,6 +6,7 @@ use App\Models\Answer;
 use App\Models\Follow;
 use App\Models\Message;
 use App\Models\Question;
+use App\Models\Setting;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','avatar','confirmation_token','phone','api_token'
+        'name', 'email', 'password','avatar','confirmation_token','phone','api_token', 'settings'
     ];
 
     /**
@@ -34,6 +35,14 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    /**
+     * 该字段将会自动en/decode json
+     * @var array
+     */
+    protected $casts = [
+       'settings' => 'array'
     ];
 
 
@@ -202,6 +211,14 @@ class User extends Authenticatable
         // 重构发送邮件
         (new UserMailer())->resetPassword($token, $this->email);
 
+    }
+
+    /**
+     * 个人资料设置
+     */
+    public function settings()
+    {
+       return new Setting($this);
     }
 
 

@@ -49,4 +49,12 @@ Route::post('inbox/{dialogId}/store', 'InboxController@store');
 Route::get('avatar', 'UsersController@avatar');
 Route::post('avatar', 'UsersController@avatarUpload');
 
+// 密码
+Route::get('password', 'PasswordController@password');
+Route::post('password/update', 'PasswordController@update');
+
+// 个人设置
+Route::get('setting', 'SettingController@index');
+Route::post('setting', 'SettingController@store');
+
 
